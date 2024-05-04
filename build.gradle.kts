@@ -1,6 +1,4 @@
-plugins {
-    java
-}
+plugins { java }
 
 tasks.named<Jar>("jar") {
     manifest {
@@ -8,14 +6,8 @@ tasks.named<Jar>("jar") {
     }
 }
 
-repositories {
-    mavenCentral()
-}
+repositories { mavenCentral() }
 
-dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
-}
+dependencies { testImplementation(libs.junit.jupiter) }
 
-tasks.named<Test>("test") {
-    useJUnitPlatform()
-}
+tasks.named<Test>("test") { useJUnitPlatform() }
