@@ -55,13 +55,15 @@ abstract class CreateFileTask : DefaultTask() {
     fun action() = myFile.writeText(fileText)
 }
 
-tasks.register<CreateFileTask>("createFile") {
-    group = "custom"
-    description = "Creates hello.txt in the current directory"
+abstract class MyPlugin : Plugin<Project> {
+    override fun apply(target: Project) {
+        target.tasks.register("createFile", CreateFileTask::class) {
+            group = "custom"
+            description = "Creates hello.txt in the current directory"
 
-    fileText = "Hello from create file register"
+            fileText = "Hello from create file register"
+        }
+    }
 }
 
-tasks.named<CreateFileTask>("createFile") {
-    fileText = "Hello from override"
-}
+apply<MyPlugin>()
