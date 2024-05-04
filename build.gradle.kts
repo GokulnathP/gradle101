@@ -39,3 +39,29 @@ tasks.register("greet") {
 
     dependsOn("hello")
 }
+
+
+abstract class CreateFileTask : DefaultTask() {
+    @get:Input
+    abstract var fileText: String
+
+    @Input
+    val fileName = "hello.txt"
+
+    @OutputFile
+    val myFile: File = File(fileName)
+
+    @TaskAction
+    fun action() = myFile.writeText(fileText)
+}
+
+tasks.register<CreateFileTask>("createFile") {
+    group = "custom"
+    description = "Creates hello.txt in the current directory"
+
+    fileText = "Hello from create file register"
+}
+
+tasks.named<CreateFileTask>("createFile") {
+    fileText = "Hello from override"
+}
