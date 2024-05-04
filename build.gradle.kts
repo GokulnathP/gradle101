@@ -12,11 +12,24 @@ dependencies { testImplementation(libs.junit.jupiter) }
 
 tasks.named<Test>("test") { useJUnitPlatform() }
 
-tasks.register("hello") {
+
+abstract class HelloTask : DefaultTask() {
+    fun hello() = println("Hello!!")
+
+    @TaskAction
+    fun hi() = println("Hi")
+}
+
+tasks.register<HelloTask>("hello") {
     group = "Greet"
 
     doFirst { println("First") }
 
+    doLast { hello() }
+}
+
+tasks.named<HelloTask>("hello") {
+    doLast { hello() }
 }
 
 tasks.register("greet") {
